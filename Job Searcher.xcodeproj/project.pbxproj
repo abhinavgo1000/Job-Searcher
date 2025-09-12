@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		3F024FDF2E746F9100A8CE31 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 3F024FDE2E746F9100A8CE31 /* LICENSE */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		3F404C4D2E72E76D00AFA9DF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,9 +28,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3F404C3F2E72E76A00AFA9DF /* Job Searcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Job Searcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3F404C4C2E72E76D00AFA9DF /* Job SearcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Job SearcherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3F404C562E72E76D00AFA9DF /* Job SearcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Job SearcherUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F024FDE2E746F9100A8CE31 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		3F024FF12E74752B00A8CE31 /* Job Searcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Job Searcher.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F024FF22E74752B00A8CE31 /* Job SearcherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Job SearcherTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F024FF32E74752B00A8CE31 /* Job SearcherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Job SearcherUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,18 +83,11 @@
 				3F404C412E72E76A00AFA9DF /* Job Searcher */,
 				3F404C4F2E72E76D00AFA9DF /* Job SearcherTests */,
 				3F404C592E72E76D00AFA9DF /* Job SearcherUITests */,
-				3F404C402E72E76A00AFA9DF /* Products */,
+				3F024FDE2E746F9100A8CE31 /* LICENSE */,
+				3F024FF12E74752B00A8CE31 /* Job Searcher.app */,
+				3F024FF22E74752B00A8CE31 /* Job SearcherTests.xctest */,
+				3F024FF32E74752B00A8CE31 /* Job SearcherUITests.xctest */,
 			);
-			sourceTree = "<group>";
-		};
-		3F404C402E72E76A00AFA9DF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3F404C3F2E72E76A00AFA9DF /* Job Searcher.app */,
-				3F404C4C2E72E76D00AFA9DF /* Job SearcherTests.xctest */,
-				3F404C562E72E76D00AFA9DF /* Job SearcherUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -114,7 +112,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Job Searcher";
-			productReference = 3F404C3F2E72E76A00AFA9DF /* Job Searcher.app */;
+			productReference = 3F024FF12E74752B00A8CE31 /* Job Searcher.app */;
 			productType = "com.apple.product-type.application";
 		};
 		3F404C4B2E72E76D00AFA9DF /* Job SearcherTests */ = {
@@ -137,7 +135,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Job SearcherTests";
-			productReference = 3F404C4C2E72E76D00AFA9DF /* Job SearcherTests.xctest */;
+			productReference = 3F024FF22E74752B00A8CE31 /* Job SearcherTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		3F404C552E72E76D00AFA9DF /* Job SearcherUITests */ = {
@@ -160,7 +158,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Job SearcherUITests";
-			productReference = 3F404C562E72E76D00AFA9DF /* Job SearcherUITests.xctest */;
+			productReference = 3F024FF32E74752B00A8CE31 /* Job SearcherUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -196,7 +194,7 @@
 			mainGroup = 3F404C362E72E76A00AFA9DF;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 3F404C402E72E76A00AFA9DF /* Products */;
+			productRefGroup = 3F404C362E72E76A00AFA9DF;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -212,6 +210,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F024FDF2E746F9100A8CE31 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
