@@ -6,13 +6,53 @@
 //
 
 import SwiftUI
+import SafariServices
 
 struct JobDetailsView: View {
+    let job: JobPosting
+    @State private var showingSafari = false
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView {
+            VStack(alignment: .leading, spacing: 16) {
+                Text(job.title).font(.title).bold()
+                if let company = job.company { Text(company).font(.title3) }
+                if let location = job.location { Label(location, systemImage: "mappin.and.ellipse") }
+
+                Divider()
+
+                if let desc = job.description, !desc.isEmpty {
+                    Text(desc)
+                        .font(.body)
+                        .textSelection(.enabled)
+                } else {
+                    Text("No description provided.")
+                        .foregroundStyle(.secondary)
+                }
+
+                if let url = job.url {
+                    Button {
+                        showingSafari = true
+                    } label: {
+                        Label("Open original posting", systemImage: "safari")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .sheet(isPresented: $showingSafari) {
+                        SafariView(url: url)
+                            .ignoresSafeArea()
+                    }
+                }
+            }
+            .padding()
+        }
+        .navigationTitle("Details")
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
-#Preview {
-    JobDetailsView()
+struct SafariView: UIViewControllerRepresentable {
+    let url: URL
+    func makeUIViewController(context: Context) -> SFSafariViewController { .init(url: url) }
+    func updateUIViewController(_ uiViewController: SFSafariViewController, context: Context) {}
 }
