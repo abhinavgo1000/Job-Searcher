@@ -13,8 +13,6 @@ struct JobQuery: Equatable {
     var includeNetflix: Bool = true
     var workday: String = ""   // e.g. "pwc.wd3.myworkdayjobs.com:Global_Experienced_Careers:pwc"
     var strict: Bool = true
-    var page: Int = 1
-    var pageSize: Int = 20
 
     func asQueryItems() -> [URLQueryItem] {
         var items: [URLQueryItem] = [
@@ -22,11 +20,9 @@ struct JobQuery: Equatable {
             .init(name: "city", value: city.isEmpty ? nil : city),
             .init(name: "include_netflix", value: String(includeNetflix)),
             .init(name: "strict", value: String(strict)),
+            .init(name: "workday", value: workday)
         ]
-        if !workday.isEmpty { items.append(.init(name: "workday", value: workday)) }
-        // If the backend supports page/page_size:
-        items.append(.init(name: "page", value: String(page)))
-        items.append(.init(name: "page_size", value: String(pageSize)))
+//        if !workday.isEmpty { items.append(.init(name: "workday", value: workday)) }
         return items
     }
 }

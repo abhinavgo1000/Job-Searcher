@@ -37,31 +37,31 @@ struct ContentView: View {
             HStack {
                 TextField("Role (e.g. Full Stack)", text: Binding(
                     get: { vm.query.q },
-                    set: { vm.query.q = $0; vm.query.page = 1; vm.performSearch() }
+                    set: { vm.query.q = $0; vm.performSearch() }
                 ))
                 .textInputAutocapitalization(.never)
 
                 TextField("City (e.g. Bengaluru)", text: Binding(
                     get: { vm.query.city },
-                    set: { vm.query.city = $0; vm.query.page = 1; vm.performSearch() }
+                    set: { vm.query.city = $0; vm.performSearch() }
                 ))
                 .textInputAutocapitalization(.never)
             }
 
             TextField("Workday filter (optional)", text: Binding(
                 get: { vm.query.workday },
-                set: { vm.query.workday = $0; vm.query.page = 1; vm.performSearch() }
+                set: { vm.query.workday = $0;vm.performSearch() }
             ))
             .textInputAutocapitalization(.never)
 
             HStack {
                 Toggle("Include Netflix", isOn: Binding(
                     get: { vm.query.includeNetflix },
-                    set: { vm.query.includeNetflix = $0; vm.query.page = 1; vm.performSearch() }
+                    set: { vm.query.includeNetflix = $0; vm.performSearch() }
                 ))
                 Toggle("Strict", isOn: Binding(
                     get: { vm.query.strict },
-                    set: { vm.query.strict = $0; vm.query.page = 1; vm.performSearch() }
+                    set: { vm.query.strict = $0; vm.performSearch() }
                 ))
             }
 
@@ -124,12 +124,6 @@ struct JobRow: View {
             }
             .font(.subheadline)
             .foregroundStyle(.secondary)
-
-            if let postedAt = job.postedAt {
-                Text("Posted \(postedAt.formatted(date: .abbreviated, time: .omitted))")
-                    .font(.footnote)
-                    .foregroundStyle(.secondary)
-            }
         }
         .padding(.vertical, 6)
     }

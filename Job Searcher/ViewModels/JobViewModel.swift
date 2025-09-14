@@ -30,7 +30,6 @@ final class JobsViewModel: ObservableObject {
     func refresh() {
         jobs.removeAll()
         canLoadMore = true
-        query.page = 1
         performSearch(debounceMillis: 0)
     }
 
@@ -48,7 +47,6 @@ final class JobsViewModel: ObservableObject {
         guard let item, canLoadMore, !isLoading else { return }
         let thresholdIndex = jobs.index(jobs.endIndex, offsetBy: -5)
         if let idx = jobs.firstIndex(of: item), idx >= thresholdIndex {
-            query.page += 1
             performSearch(debounceMillis: 0)
         }
     }
@@ -61,14 +59,8 @@ final class JobsViewModel: ObservableObject {
         inFlightToken = token
         do {
             let new = try await api.searchJobs(query: query, cancellationToken: token)
-            if query.page == 1 {
-                jobs = new
-            } else {
-                // de-dupe by id
-                let existing = Set(jobs.map(\.id))
-                jobs.append(contentsOf: new.filter { !existing.contains($0.id) })
-            }
-            canLoadMore = new.count >= query.pageSize
+            let existing = Set(jobs.map(\.id))
+            jobs.append(contentsOf: new.filter { !existing.contains($0.id) })
         } catch is CancellationError {
             // ignore
         } catch {
