@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct JobQuery: Equatable {        // ← make sure this is here
+struct JobQuery: Equatable {
     var q: String = ""
     var city: String = ""
     var includeNetflix: Bool = true
