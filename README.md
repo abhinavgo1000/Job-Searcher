@@ -35,7 +35,7 @@ A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query mu
   <img src="./Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-15%20at%2015.07.18.png" width="300" alt="App Screenshot">
 </p>
 <p align="center">
-  <img src="./Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-15%20at%2015.07.18.png" width="300" alt="App Screenshot">
+  <img src="./Simulator%20Screenshot%20-%20iPhone%2016%20Pro%20-%202025-09-15%20at%2015.22.13.png" width="300" alt="App Screenshot">
 </p>
 
 ---
