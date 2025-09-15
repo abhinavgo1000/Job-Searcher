@@ -20,13 +20,32 @@ struct ContentView: View {
                 resultsList
             }
             .navigationTitle("Job Search")
-            .onAppear { vm.onAppear() }
+            .onAppear {
+                print("[ContentView] BaseURL =", AppConfig.baseURL.absoluteString)
+                vm.refresh()
+            }
+            // iOS 17+ onChange (two-parameter, with initial flag)
+            .onChange(of: vm.query, initial: false) { oldValue, newValue in
+                print("""
+                [ContentView] Query changed →
+                  q=\(newValue.q),
+                  city=\(newValue.city),
+                  workday=\(newValue.workday),
+                  includeNetflix=\(newValue.includeNetflix),
+                  strict=\(newValue.strict),
+                  page=\(newValue.page)
+                """)
+            }
+            .onChange(of: vm.jobs, initial: false) { _, newJobs in
+                print("[ContentView] Jobs updated → \(newJobs.count) items")
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        print("[ContentView] Manual refresh tapped")
                         vm.refresh()
                     } label: { Image(systemName: "arrow.clockwise") }
-                        .disabled(vm.isLoading)
+                    .disabled(vm.isLoading)
                 }
             }
         }
@@ -37,36 +56,37 @@ struct ContentView: View {
             HStack {
                 TextField("Role (e.g. Full Stack)", text: Binding(
                     get: { vm.query.q },
-                    set: { vm.query.q = $0; vm.performSearch() }
+                    set: { vm.query.q = $0; vm.query.page = 1; vm.performSearch() }
                 ))
                 .textInputAutocapitalization(.never)
 
                 TextField("City (e.g. Bengaluru)", text: Binding(
                     get: { vm.query.city },
-                    set: { vm.query.city = $0; vm.performSearch() }
+                    set: { vm.query.city = $0; vm.query.page = 1; vm.performSearch() }
                 ))
                 .textInputAutocapitalization(.never)
             }
 
             TextField("Workday filter (optional)", text: Binding(
                 get: { vm.query.workday },
-                set: { vm.query.workday = $0;vm.performSearch() }
+                set: { vm.query.workday = $0; vm.query.page = 1; vm.performSearch() }
             ))
             .textInputAutocapitalization(.never)
 
             HStack {
                 Toggle("Include Netflix", isOn: Binding(
                     get: { vm.query.includeNetflix },
-                    set: { vm.query.includeNetflix = $0; vm.performSearch() }
+                    set: { vm.query.includeNetflix = $0; vm.query.page = 1; vm.performSearch() }
                 ))
                 Toggle("Strict", isOn: Binding(
                     get: { vm.query.strict },
-                    set: { vm.query.strict = $0; vm.performSearch() }
+                    set: { vm.query.strict = $0; vm.query.page = 1; vm.performSearch() }
                 ))
             }
 
             if let error = vm.errorMessage {
                 Text(error).foregroundStyle(.red).font(.footnote)
+                    .onAppear { print("[ContentView] Error:", error) }
             }
         }
         .padding()
@@ -83,51 +103,58 @@ struct ContentView: View {
             }
 
             if vm.isLoading {
-                HStack {
-                    Spacer()
-                    ProgressView().padding()
-                    Spacer()
-                }
+                HStack { Spacer(); ProgressView().padding(); Spacer() }
+            } else if vm.jobs.isEmpty {
+                ContentUnavailableView(
+                    "No results",
+                    systemImage: "magnifyingglass",
+                    description: Text("Try changing your filters.")
+                )
             } else if vm.canLoadMore {
                 HStack {
                     Spacer()
-                    Button("Load more") { vm.performSearch(debounceMillis: 0) }
+                    Button("Load more") {
+                        print("[ContentView] Load more tapped (next page \(vm.query.page + 1))")
+                        vm.performSearch(debounceMillis: 0)
+                    }
                     Spacer()
                 }
-            } else if vm.jobs.isEmpty {
-                ContentUnavailableView("No results", systemImage: "magnifyingglass", description: Text("Try changing your filters."))
             }
         }
         .listStyle(.plain)
         .navigationDestination(for: JobPosting.self) { job in
             JobDetailsView(job: job)
         }
+        .refreshable {
+            print("[ContentView] Pull-to-refresh")
+            vm.refresh()
+        }
     }
 }
 
 struct JobRow: View {
     let job: JobPosting
-
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             Text(job.title).font(.headline)
             HStack(spacing: 8) {
-                if let company = job.company, !company.isEmpty {
-                    Label(company, systemImage: "building.2")
-                }
+                Label(job.company!, systemImage: "building.2")
                 if let location = job.location, !location.isEmpty {
                     Label(location, systemImage: "mappin.and.ellipse")
                 }
-                if let source = job.source, !source.isEmpty {
-                    Label(source.capitalized, systemImage: "tray.full")
-                }
+                Label(job.source.capitalized, systemImage: "tray.full")
             }
             .font(.subheadline)
             .foregroundStyle(.secondary)
+
+            if let snippet = job.descriptionSnippet, !snippet.isEmpty {
+                Text(snippet).font(.footnote).lineLimit(2)
+            }
         }
         .padding(.vertical, 6)
     }
 }
+
 
 #Preview {
     ContentView()

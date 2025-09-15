@@ -7,12 +7,14 @@
 
 import Foundation
 
-struct JobQuery: Equatable {
+struct JobQuery: Equatable {        // ← make sure this is here
     var q: String = ""
     var city: String = ""
     var includeNetflix: Bool = true
-    var workday: String = ""   // e.g. "pwc.wd3.myworkdayjobs.com:Global_Experienced_Careers:pwc"
+    var workday: String = ""
     var strict: Bool = true
+    var page: Int = 1
+    var pageSize: Int = 20
 
     func asQueryItems() -> [URLQueryItem] {
         var items: [URLQueryItem] = [
@@ -20,9 +22,11 @@ struct JobQuery: Equatable {
             .init(name: "city", value: city.isEmpty ? nil : city),
             .init(name: "include_netflix", value: String(includeNetflix)),
             .init(name: "strict", value: String(strict)),
-            .init(name: "workday", value: workday)
+            .init(name: "page", value: String(page)),
+            .init(name: "page_size", value: String(pageSize))
         ]
-//        if !workday.isEmpty { items.append(.init(name: "workday", value: workday)) }
+        if !workday.isEmpty { items.append(.init(name: "workday", value: workday)) }
         return items
     }
 }
+

@@ -21,7 +21,7 @@ struct JobDetailsView: View {
 
                 Divider()
 
-                if let desc = job.description_snippet, !desc.isEmpty {
+                if let desc = job.descriptionSnippet, !desc.isEmpty {
                     Text(desc)
                         .font(.body)
                         .textSelection(.enabled)
