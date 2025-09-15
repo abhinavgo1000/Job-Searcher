@@ -30,9 +30,10 @@ struct ContentView: View {
                             vm.refresh()
                         } label: {
                             Label("Search", systemImage: "magnifyingglass")
+                                .font(.subheadline.bold())
                         }
                         .disabled(!vm.hasCriteria)
-                        .font(.subheadline.bold())
+                        .buttonStyle(.bordered)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(vm.hasCriteria ? Color.blue : Color.gray) // ✅ blue when active, gray when disabled
@@ -41,6 +42,8 @@ struct ContentView: View {
                     }
                 }
             }
+            .tint(.blue)                                   // ← makes back button blue
+            .toolbarBackground(.visible, for: .navigationBar) // ensure bar is rendered
         }
 
         private var searchBar: some View {

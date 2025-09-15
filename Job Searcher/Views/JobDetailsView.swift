@@ -37,7 +37,9 @@ struct JobDetailsView: View {
                         Label("Open original posting", systemImage: "safari")
                             .frame(maxWidth: .infinity)
                     }
-                    .buttonStyle(.borderedProminent)
+                    .buttonStyle(.bordered)
+                    .background(.blue)
+                    .foregroundColor(.white)
                     .sheet(isPresented: $showingSafari) {
                         SafariView(url: URL(string: url)!)
                             .ignoresSafeArea()
