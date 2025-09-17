@@ -1,4 +1,4 @@
-# 📱 Job Search iOS App
+# 📱 Job Searcher iOS App
 
 A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query multiple job sources (Workday, Netflix, Amazon India, etc.) through your backend API and view the results in a clean, mobile-friendly interface.
 
@@ -67,8 +67,8 @@ JobSearch/
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/yourusername/jobsearch-ios.git
-   cd jobsearch-ios
+   git clone https://github.com/yourusername/Job-Searcher.git
+   cd Job-Searcher
    ```
 2. Open `JobSearch.xcodeproj` in Xcode.
 3. Add your backend base URL in **Info.plist**:
