@@ -20,7 +20,6 @@ struct ContentView: View {
                 .navigationTitle("Job Search")
                 .onAppear {
                     print("[ContentView] BaseURL =", AppConfig.baseURL.absoluteString)
-                    // NOTE: no vm.refresh() here → no call on first load
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
