@@ -70,7 +70,7 @@ JobSearch/
    git clone https://github.com/abhinavgo1000/Job-Searcher.git
    cd Job-Searcher
    ```
-2. Open `JobSearch.xcodeproj` in Xcode.
+2. Open `Job Searcher.xcodeproj` in Xcode.
 3. Add your backend base URL in **Info.plist**:
 
    ```xml
