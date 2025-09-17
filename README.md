@@ -67,7 +67,7 @@ JobSearch/
 1. Clone the repo:
 
    ```bash
-   git clone https://github.com/yourusername/Job-Searcher.git
+   git clone https://github.com/abhinavgo1000/Job-Searcher.git
    cd Job-Searcher
    ```
 2. Open `JobSearch.xcodeproj` in Xcode.
