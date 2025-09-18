@@ -32,9 +32,7 @@ struct ContentView: View {
                                 .font(.subheadline.bold())
                         }
                         .disabled(!vm.hasCriteria)
-                        .buttonStyle(.bordered)
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
+                        .buttonStyle(.automatic)
                         .background(vm.hasCriteria ? Color.blue : Color.gray) // ✅ blue when active, gray when disabled
                         .foregroundColor(.white)   // ✅ white text/icon
                         .clipShape(Capsule())
