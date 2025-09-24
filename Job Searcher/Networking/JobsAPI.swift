@@ -57,4 +57,53 @@ struct JobsAPI {
             throw error
         }
     }
+    
+    func saveJob(job: JobPosting) async throws -> JobPosting? {
+        let url = baseURL.appendingPathComponent("save-job")
+
+        var req = URLRequest(url: url)
+        req.httpMethod = "POST"
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.setValue("application/json", forHTTPHeaderField: "Accept")
+
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        
+        let body = try encoder.encode(job)
+        req.httpBody = body
+        
+        if let json = String(data: body, encoding: .utf8) {
+            print("saveJob request JSON:\n\(json)")
+        }
+
+        let (data, resp) = try await session.data(for: req)
+        guard let http = resp as? HTTPURLResponse else { throw URLError(.badServerResponse) }
+        guard (200..<300).contains(http.statusCode) else {
+            throw URLError(.init(rawValue: http.statusCode))
+        }
+
+        // Some backends return an empty body on success.
+        if data.isEmpty { return nil }
+
+        do {
+            return try Self.decoder.decode(JobPosting.self, from: data)
+        } catch {
+            if let s = String(data: data, encoding: .utf8) {
+                print("SaveJob decode failed, raw body:\n\(s)")
+            }
+            if let decErr = error as? DecodingError {
+                switch decErr {
+                case .keyNotFound(let k, let ctx): print("KeyNotFound:", k, ctx.debugDescription)
+                case .typeMismatch(let t, let ctx): print("TypeMismatch:", t, ctx.debugDescription)
+                case .valueNotFound(let v, let ctx): print("ValueNotFound:", v, ctx.debugDescription)
+                case .dataCorrupted(let ctx): print("DataCorrupted:", ctx.debugDescription)
+                @unknown default: print("Unknown decoding error")
+                }
+            } else {
+                print("Non-decoding error:", error.localizedDescription)
+            }
+            throw error
+        }
+    }
 }

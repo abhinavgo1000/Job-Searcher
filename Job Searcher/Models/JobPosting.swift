@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct JobPosting: Identifiable, Decodable, Hashable {
+struct JobPosting: Identifiable, Codable, Hashable {
     private let _id: String
     var id: String { _id }
 
@@ -51,12 +51,32 @@ struct JobPosting: Identifiable, Decodable, Hashable {
         let providedId = try c.decodeIfPresent(String.self, forKey: .id)
         _id = providedId ?? jobId ?? url ?? "\(source)|\(company!)|\(title)|\(location ?? "")"
     }
+    
+    func encode(to encoder: any Encoder) throws {
+        var c = encoder.container(keyedBy: CodingKeys.self)
+        
+        try c.encode(source, forKey: .source)
+        try c.encode(company, forKey: .company)
+        try c.encode(title, forKey: .title)
+        try c.encode(location, forKey: .location)
+        try c.encode(remote, forKey: .remote)
+        
+        try c.encode(techStack, forKey: .techStack)
+        
+        if let compensation = compensation {
+            try c.encode(compensation, forKey: .compensation)
+        }
+        
+        try c.encode(url, forKey: .url)
+        try c.encode(jobId, forKey: .jobId)
+        try c.encode(descriptionSnippet, forKey: .descriptionSnippet)
+    }
 
     static func == (lhs: JobPosting, rhs: JobPosting) -> Bool { lhs._id == rhs._id }
     func hash(into hasher: inout Hasher) { hasher.combine(_id) }
 }
 
-struct Compensation: Decodable, Equatable, Hashable {
+struct Compensation: Codable, Equatable, Hashable {
     let currency: String?
     let min: Float?
     let max: Float?

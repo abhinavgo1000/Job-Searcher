@@ -11,6 +11,10 @@ import SafariServices
 struct JobDetailsView: View {
     let job: JobPosting
     @State private var showingSafari = false
+    @State private var isSaving = false
+    @State private var showSaveAlert = false
+    @State private var saveAlertTitle: String = ""
+    @State private var saveAlertMessage: String? = nil
 
     var body: some View {
         ScrollView {
@@ -39,17 +43,48 @@ struct JobDetailsView: View {
                     }
                     .buttonStyle(.bordered)
                     .background(.blue)
-                    .foregroundColor(.white)
+                    .foregroundStyle(.white)
                     .sheet(isPresented: $showingSafari) {
                         SafariView(url: URL(string: url)!)
                             .ignoresSafeArea()
                     }
                 }
+                Button {
+                    Task {
+                        isSaving = true
+                        defer { isSaving = false }
+                        let api = JobsAPI(baseURL: AppConfig.baseURL)
+                        do {
+                            let saved = try await api.saveJob(job: job)
+                            saveAlertTitle = "Saved"
+                            if let saved = saved {
+                                let companyText = saved.company ?? ""
+                                saveAlertMessage = companyText.isEmpty ? "Saved \(saved.title)." : "Saved \(saved.title) at \(companyText)."
+                            } else {
+                                saveAlertMessage = "Job saved successfully."
+                            }
+                        } catch {
+                            saveAlertTitle = "Save Failed"
+                            saveAlertMessage = error.localizedDescription
+                        }
+                        showSaveAlert = true
+                    }
+                } label: {
+                    Label(isSaving ? "Saving…" : "Save Job Posting", systemImage: isSaving ? "hourglass" : "square.and.arrow.down")
+                        .frame(maxWidth: .infinity)
+                }
+                .disabled(isSaving)
+                .buttonStyle(.plain)
             }
             .padding()
         }
         .navigationTitle("Details")
         .navigationBarTitleDisplayMode(.inline)
+        .alert(saveAlertTitle, isPresented: $showSaveAlert) {
+            Button("OK", role: .cancel) { }
+        } message: {
+            if let msg = saveAlertMessage { Text(msg) }
+        }
     }
 }
 
