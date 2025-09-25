@@ -11,79 +11,77 @@ struct ContentView: View {
     @StateObject private var vm = JobsViewModel(api: JobsAPI(baseURL: AppConfig.baseURL))
 
     var body: some View {
-            NavigationStack {
-                VStack(spacing: 0) {
-                    searchBar
-                    Divider()
-                    resultsList
-                }
-                .navigationTitle("Job Search")
-                .onAppear {
-                    print("[ContentView] BaseURL =", AppConfig.baseURL.absoluteString)
-                }
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button {
-                            print("[ContentView] Manual search tapped")
-                            vm.autoSearchEnabled = true            // enable live updates *after* first search
-                            vm.refresh()
-                        } label: {
-                            Label("Search", systemImage: "magnifyingglass")
-                                .font(.subheadline.bold())
-                        }
-                        .disabled(!vm.hasCriteria)
-                        .buttonStyle(.automatic)
-                        .background(vm.hasCriteria ? Color.blue : Color.gray) // ✅ blue when active, gray when disabled
-                        .foregroundColor(.white)   // ✅ white text/icon
-                        .clipShape(Capsule())
-                    }
-                }
-            }
-            .tint(.blue)                                   // ← makes back button blue
-            .toolbarBackground(.visible, for: .navigationBar) // ensure bar is rendered
+        VStack(spacing: 0) {
+            searchBar
+            Divider()
+            resultsList
         }
-
-        private var searchBar: some View {
-            VStack(alignment: .leading, spacing: 12) {
-                HStack {
-                    TextField("Role (e.g. Full Stack)", text: Binding(
-                        get: { vm.query.q },
-                        set: { vm.query.q = $0; vm.query.page = 1; vm.performSearch() }
-                    ))
-                    .textInputAutocapitalization(.never)
-
-                    TextField("City (e.g. Bengaluru)", text: Binding(
-                        get: { vm.query.city },
-                        set: { vm.query.city = $0; vm.query.page = 1; vm.performSearch() }
-                    ))
-                    .textInputAutocapitalization(.never)
+        .navigationTitle("Job Search")
+        .onAppear {
+            print("[ContentView] BaseURL =", AppConfig.baseURL.absoluteString)
+        }
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    print("[ContentView] Manual search tapped")
+                    vm.autoSearchEnabled = true            // enable live updates *after* first search
+                    vm.refresh()
+                } label: {
+                    Label("Search", systemImage: "magnifyingglass")
+                        .font(.subheadline.bold())
                 }
+                .disabled(!vm.hasCriteria)
+                .buttonStyle(.automatic)
+                .background(vm.hasCriteria ? Color.blue : Color.gray) // ✅ blue when active, gray when disabled
+                .foregroundColor(.white)   // ✅ white text/icon
+                .clipShape(Capsule())
+            }
+        }
+        .tint(.blue)                                   // ← makes back button blue
+        .toolbarBackground(.visible, for: .navigationBar) // ensure bar is rendered
+    }
 
-                TextField("Workday filter (optional)", text: Binding(
-                    get: { vm.query.workday },
-                    set: { vm.query.workday = $0; vm.query.page = 1; vm.performSearch() }
+    private var searchBar: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                TextField("Role (e.g. Full Stack)", text: Binding(
+                    get: { vm.query.q },
+                    set: { vm.query.q = $0; vm.query.page = 1; vm.performSearch() }
                 ))
                 .textInputAutocapitalization(.never)
 
-                HStack {
-                    Toggle("Include Netflix", isOn: Binding(
-                        get: { vm.query.includeNetflix },
-                        set: { vm.query.includeNetflix = $0; vm.query.page = 1; vm.performSearch() }
-                    ))
-                    Toggle("Strict", isOn: Binding(
-                        get: { vm.query.strict },
-                        set: { vm.query.strict = $0; vm.query.page = 1; vm.performSearch() }
-                    ))
-                }
-
-                if let error = vm.errorMessage {
-                    Text(error).foregroundStyle(.red).font(.footnote)
-                        .onAppear { print("[ContentView] Error:", error) }
-                }
+                TextField("City (e.g. Bengaluru)", text: Binding(
+                    get: { vm.query.city },
+                    set: { vm.query.city = $0; vm.query.page = 1; vm.performSearch() }
+                ))
+                .textInputAutocapitalization(.never)
             }
-            .padding()
-            .background(.thinMaterial)
+
+            TextField("Workday filter (optional)", text: Binding(
+                get: { vm.query.workday },
+                set: { vm.query.workday = $0; vm.query.page = 1; vm.performSearch() }
+            ))
+            .textInputAutocapitalization(.never)
+
+            HStack {
+                Toggle("Include Netflix", isOn: Binding(
+                    get: { vm.query.includeNetflix },
+                    set: { vm.query.includeNetflix = $0; vm.query.page = 1; vm.performSearch() }
+                ))
+                Toggle("Strict", isOn: Binding(
+                    get: { vm.query.strict },
+                    set: { vm.query.strict = $0; vm.query.page = 1; vm.performSearch() }
+                ))
+            }
+
+            if let error = vm.errorMessage {
+                Text(error).foregroundStyle(.red).font(.footnote)
+                    .onAppear { print("[ContentView] Error:", error) }
+            }
         }
+        .padding()
+        .background(.thinMaterial)
+    }
 
     private var resultsList: some View {
         List {

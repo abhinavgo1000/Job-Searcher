@@ -8,9 +8,10 @@
 import Foundation
 
 struct JobPosting: Identifiable, Codable, Hashable {
-    private let _id: String
-    var id: String { _id }
+    private let _id0: String
+    var id: String { _id0 }
 
+    let _id: String?
     let source: String
     let company: String?
     let title: String
@@ -23,7 +24,7 @@ struct JobPosting: Identifiable, Codable, Hashable {
     let descriptionSnippet: String?
 
     enum CodingKeys: String, CodingKey {
-        case source, company, title, location, remote
+        case source, company, title, location, remote, _id
         case techStack = "tech_stack"
         case compensation, url
         case jobId = "job_id"
@@ -34,6 +35,7 @@ struct JobPosting: Identifiable, Codable, Hashable {
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
 
+        _id = try c.decodeIfPresent(String.self, forKey: ._id)
         source = try c.decode(String.self, forKey: .source)
         company = try c.decode(String.self, forKey: .company)
         title   = try c.decode(String.self, forKey: .title)
@@ -49,7 +51,7 @@ struct JobPosting: Identifiable, Codable, Hashable {
         descriptionSnippet = try c.decodeIfPresent(String.self, forKey: .descriptionSnippet)
 
         let providedId = try c.decodeIfPresent(String.self, forKey: .id)
-        _id = providedId ?? jobId ?? url ?? "\(source)|\(company!)|\(title)|\(location ?? "")"
+        _id0 = providedId ?? jobId ?? url ?? "\(source)|\(company!)|\(title)|\(location ?? "")"
     }
     
     func encode(to encoder: any Encoder) throws {

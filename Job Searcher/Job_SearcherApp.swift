@@ -11,7 +11,17 @@ import SwiftUI
 struct Job_SearcherApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView {
+                NavigationStack { ContentView() }
+                    .tabItem {
+                        Label("Search", systemImage: "magnifyingglass")
+                    }
+
+                NavigationStack { SavedJobsView() }
+                    .tabItem {
+                        Label("Saved", systemImage: "tray")
+                    }
+            }
         }
     }
 }
