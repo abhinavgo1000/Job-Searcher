@@ -136,7 +136,7 @@ Make sure your backend returns job postings in this format (fields may vary):
 
 ### Insights
 
-```
+```json
 [
   {
    "summary": "Strong backend and cloud skills required.",
