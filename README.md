@@ -1,6 +1,6 @@
 # 📱 Job Searcher iOS App
 
-A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query multiple job sources (Workday, Netflix, Amazon India, etc.) through your backend API and view the results in a clean, mobile-friendly interface.
+A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query multiple job sources (Workday, Netflix, Amazon India, etc.) through your backend API and view the results in a clean, mobile-friendly interface. Also used to query and display job related insights based on position, companies, years of experience and whether remote roles or not.
 
 ---
 
@@ -32,10 +32,19 @@ A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query mu
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="./Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202025-09-18%20at%2013.34.36.png" width="300" alt="Landing Page Screenshot">
+  <img src="./Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202025-09-28%20at%2015.17.13.png" width="300" alt="Landing Page Screenshot">
 </p>
 <p align="center">
-  <img src="./Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202025-09-18%20at%2013.34.46.png" width="300" alt="Job Detail Screenshot">
+  <img src="./Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202025-09-28%20at%2015.17.21.png" width="300" alt="Job Detail Screenshot">
+</p>
+<p align="center">
+  <img src="./Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202025-09-28%20at%2015.17.31.png" width="300" alt="Insight Search Screenshot">
+</p>
+<p align="center">
+  <img src="./Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202025-09-28%20at%2015.17.43.png" width="300" alt="Saved Jobs Screenshot">
+</p>
+<p align="center">
+  <img src="./Simulator%20Screenshot%20-%20iPhone%2017%20Pro%20-%202025-09-28%20at%2015.17.54.png" width="300" alt="Saved Insights Screenshot">
 </p>
 
 ---
@@ -45,16 +54,23 @@ A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query mu
 ```
 JobSearch/
 ├── Models/
-│   └── JobPosting.swift
+│   ├── JobPosting.swift
+|   └── JobInsights.swift
 ├── Networking/
 │   ├── JobQuery.swift
-│   └── JobsAPI.swift
+│   ├── JobsAPI.swift
+|   ├── InsightsQuery.swift
+|   └── InsightsAPI.swift
 ├── ViewModels/
-│   └── JobsViewModel.swift
+│   ├── JobsViewModel.swift
+|   └── InsightsViewModel.swift
 ├── Views/
 │   ├── ContentView.swift
-│   ├── JobRow.swift
-│   └── JobDetailView.swift
+│   ├── InsightView.swift
+│   ├── JobDetailsView.swift
+│   ├── JobInsightsView.swift
+│   ├── SavedInsightsView.swift
+│   └── SavedJobsView.swift
 ├── Support/
 │   └── AppConfig.swift
 └── JobSearchApp.swift
@@ -93,6 +109,8 @@ JobSearch/
 
 Make sure your backend returns job postings in this format (fields may vary):
 
+### Jobs
+
 ```json
 [
   {
@@ -113,6 +131,31 @@ Make sure your backend returns job postings in this format (fields may vary):
     "url": "https://example.com/job/abc123",
     "description_snippet": "We are hiring a Full Stack Engineer..."
   }
+]
+```
+
+### Insights
+
+```
+[
+  {
+   "summary": "Strong backend and cloud skills required.",
+   "skills": [
+     {
+       "name": "Python",
+       "description": "Used for backend development.",
+       "proficiency_level": "Expert",
+       "category": "Backend"
+     },
+     {
+       "name": "AWS",
+       "description": "Cloud deployment and management.",
+       "proficiency_level": "Intermediate",
+       "category": "Cloud"
+     }
+   ],
+   "feedback": "Ensure hands-on experience with cloud platforms."
+ }
 ]
 ```
 
