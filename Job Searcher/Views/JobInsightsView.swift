@@ -1,3 +1,10 @@
+//
+//  JobDetailsView.swift
+//  Job Searcher
+//
+//  Created by Abhinav Goel on 9/19/25.
+//
+
 import SwiftUI
 
 struct JobInsightsView: View {
