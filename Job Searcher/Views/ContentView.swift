@@ -144,8 +144,3 @@ struct JobRow: View {
         .padding(.vertical, 6)
     }
 }
-
-
-#Preview {
-    ContentView()
-}

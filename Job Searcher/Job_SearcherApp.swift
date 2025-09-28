@@ -16,10 +16,20 @@ struct Job_SearcherApp: App {
                     .tabItem {
                         Label("Search", systemImage: "magnifyingglass")
                     }
+                
+                NavigationStack { JobInsightsView() }
+                    .tabItem {
+                        Label("Research", systemImage: "rectangle.and.text.magnifyingglass")
+                    }
 
                 NavigationStack { SavedJobsView() }
                     .tabItem {
-                        Label("Saved", systemImage: "tray")
+                        Label("Saved Jobs", systemImage: "tray")
+                    }
+                
+                NavigationStack { SavedInsightsView() }
+                    .tabItem {
+                        Label("Saved Insights", systemImage: "tray.full")
                     }
             }
         }
