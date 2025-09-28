@@ -1,6 +1,7 @@
 # 📱 Job Searcher iOS App
 
-A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query multiple job sources (Workday, Netflix, Amazon India, etc.) through your backend API and view the results in a clean, mobile-friendly interface. Also used to query and display job related insights based on position, companies, years of experience and whether remote roles or not.
+* A SwiftUI iOS client for the Job Searcher AI backend. This app lets you query multiple job sources (Workday, Netflix, Amazon India, etc.) through your backend API and view the results in a clean, mobile-friendly interface.
+* Also used to query and display job related insights based on position, companies, years of experience and whether remote roles or not.
 
 ---
 
