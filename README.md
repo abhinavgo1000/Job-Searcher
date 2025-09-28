@@ -7,6 +7,7 @@
 
 ## 🚀 Features
 
+### Jobs
 * 🔎 **Search by role and city** (e.g., `Full Stack`, `Bengaluru`)
 * 🎛 **Filters**
 
@@ -17,6 +18,16 @@
 * 📖 **Job detail view** with description and direct link to the original posting
 * 🌐 **Opens job links** in Safari inside the app
 * 🔄 Pull-to-refresh & load-more pagination
+* Option to save job posting, view and delete saved job postings
+
+### Insights
+* 🔎 **Search by position, companies and years of experience** (e.g., `Full Stack`, `deloitte, google`, `4`)
+* 🎛 **Filters**
+
+  * Toggle `Remote`
+* 📄 **Job insights** with feedback; skills with category, description, and proficiency level; and summary
+* 🔄 Pull-to-refresh & load-more pagination
+* Option to save job insight, view and delete saved job insights
 
 ---
 
